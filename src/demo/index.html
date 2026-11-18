@@ -1,1 +1,196 @@
-<h1>Simulador</h1>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador Didático de Árvore Binária de Busca (BST)</title>
+    <!-- Conexão com o CSS externo -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Cabeçalho e Cenários Pré-configurados -->
+    <header>
+        <div class="header-title">
+            <h1>🌳 Simulador de Árvore Binária de Busca (BST)</h1>
+            <p>Visualização Passo a Passo • Operações, Travessias e Análise O(log n) vs O(n)</p>
+        </div>
+
+        <div class="presets-bar">
+            <button class="btn-secondary" id="btn-preset-balanced" title="Carrega [50, 30, 70, 20, 40, 60, 80]">
+                ⚖️ Caso Médio (Balanceada)
+            </button>
+            <button class="btn-secondary" id="btn-preset-complete" title="Carrega Árvore Completa com 15 nós">
+                🌲 Árvore Completa
+            </button>
+            <button class="btn-secondary" id="btn-preset-worst" title="Carrega [10, 20, 30, 40, 50, 60]">
+                📉 Pior Caso (Degenerada)
+            </button>
+            <div class="custom-input-group">
+                <input type="text" id="input-custom-array" placeholder="Ex: 45, 22, 77, 11, 30" value="45, 22, 77, 11, 30, 65, 90">
+                <button class="btn-primary" id="btn-load-custom">Carregar Lista</button>
+            </div>
+            <button class="btn-danger" id="btn-clear-tree" title="Limpar toda a árvore">Limpar</button>
+        </div>
+    </header>
+
+    <!-- Área Principal -->
+    <div class="main-container">
+        
+        <!-- Esquerda: Operações, Timeline e Canvas SVG -->
+        <div class="workspace">
+            
+            <!-- Operações Individuais e Travessias -->
+            <div class="controls-card">
+                <div class="op-group">
+                    <input type="number" id="input-op-value" placeholder="Valor" value="35">
+                    <button class="btn-success" id="btn-insert">➕ Inserir</button>
+                    <button class="btn-primary" id="btn-search">🔍 Buscar</button>
+                    <button class="btn-danger" id="btn-remove">🗑️ Remover</button>
+                </div>
+
+                <div class="speed-control">
+                    <label for="speed-slider">Velocidade:</label>
+                    <input type="range" id="speed-slider" min="0.5" max="3" step="0.5" value="1">
+                    <span id="speed-label" style="font-family: var(--font-mono); font-weight: bold;">1.0x</span>
+                </div>
+
+                <!-- Botões de Travessia -->
+                <div class="traversal-bar">
+                    <span class="traversal-label">🧭 Travessias:</span>
+                    <button class="btn-purple" id="btn-inorder" title="Esquerda -> Raiz -> Direita (Ordem Crescente)">
+                        In-Order (Em-Ordem)
+                    </button>
+                    <button class="btn-purple" id="btn-preorder" title="Raiz -> Esquerda -> Direita">
+                        Pre-Order (Pré-Ordem)
+                    </button>
+                    <button class="btn-purple" id="btn-postorder" title="Esquerda -> Direita -> Raiz">
+                        Post-Order (Pós-Ordem)
+                    </button>
+                    <button class="btn-secondary" id="btn-levelorder" title="Busca em Largura (Nível por Nível)">
+                        Level-Order (BFS / Largura)
+                    </button>
+                </div>
+            </div>
+
+            <!-- Controles de Execução Passo a Passo -->
+            <div class="timeline-bar">
+                <div class="playback-buttons">
+                    <button class="btn-primary" id="btn-play">▶️ Executar (Play)</button>
+                    <button class="btn-amber" id="btn-pause" disabled>⏸️ Pausar</button>
+                    <button class="btn-secondary" id="btn-prev" disabled>⏮️ Anterior (Back)</button>
+                    <button class="btn-secondary" id="btn-step" disabled>⏭️ Próximo Passo (Step)</button>
+                    <button class="btn-secondary" id="btn-reset" disabled>🔄 Reiniciar (Reset)</button>
+                </div>
+
+                <div class="step-indicator" id="step-counter">
+                    Passo: 0 de 0
+                </div>
+            </div>
+
+            <!-- Canvas SVG da Árvore -->
+            <div class="canvas-container">
+                <svg id="bst-svg" viewBox="0 0 800 450" preserveAspectRatio="xMidYMid meet"></svg>
+                
+                <div class="legend">
+                    <div class="legend-item"><span class="dot" style="background: var(--accent-amber);"></span> Nó Atual</div>
+                    <div class="legend-item"><span class="dot" style="background: var(--accent-purple);"></span> Na Pilha / Fila</div>
+                    <div class="legend-item"><span class="dot" style="background: var(--accent-blue);"></span> Caminho / Explorado</div>
+                    <div class="legend-item"><span class="dot" style="background: var(--accent-green);"></span> Encontrado / Coletado</div>
+                    <div class="legend-item"><span class="dot" style="background: var(--accent-red);"></span> Não Encontrado / Removido</div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Direita: Painel de Estado, Variáveis e Métricas -->
+        <aside class="sidebar">
+            
+            <!-- Log Explicativo -->
+            <div class="panel-box">
+                <div class="panel-title">📝 Log Explicativo do Passo Atual</div>
+                <div class="log-box" id="step-log">
+                    Selecione um cenário acima, execute uma travessia ou insira um valor para iniciar a simulação passo a passo.
+                </div>
+            </div>
+
+            <!-- Sequência de Saída da Travessia -->
+            <div class="panel-box">
+                <div class="panel-title">📤 Sequência de Saída (Travessia)</div>
+                <div class="traversal-output-box" id="traversal-output">
+                    [ ]
+                </div>
+            </div>
+
+            <!-- Métricas em Tempo Real -->
+            <div class="panel-box">
+                <div class="panel-title">📊 Métricas & Complexidade</div>
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-label">Operações / Comparações</div>
+                        <div class="metric-value" id="metric-comparisons" style="color: var(--accent-amber);">0</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Total de Nós (n)</div>
+                        <div class="metric-value" id="metric-nodes">0</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Altura da Árvore (h)</div>
+                        <div class="metric-value" id="metric-height">0</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Eficiência Estrutural</div>
+                        <div class="metric-value" id="metric-efficiency">
+                            <span class="badge-complexity" style="background: #334155; color: #cbd5e1;">N/A</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Estado das Variáveis Auxiliares -->
+            <div class="panel-box">
+                <div class="panel-title">⚙️ Variáveis Auxiliares do Algoritmo</div>
+                <table class="vars-table">
+                    <tbody>
+                        <tr>
+                            <td class="var-name">operacao</td>
+                            <td class="var-val" id="var-op">-</td>
+                        </tr>
+                        <tr>
+                            <td class="var-name">alvo / regra</td>
+                            <td class="var-val" id="var-target">-</td>
+                        </tr>
+                        <tr>
+                            <td class="var-name">no_atual</td>
+                            <td class="var-val" id="var-current">NULL</td>
+                        </tr>
+                        <tr>
+                            <td class="var-name">no_pai</td>
+                            <td class="var-val" id="var-parent">NULL</td>
+                        </tr>
+                        <tr>
+                            <td class="var-name">direcao</td>
+                            <td class="var-val" id="var-direction">-</td>
+                        </tr>
+                        <tr>
+                            <td class="var-name">pilha_recursao / fila</td>
+                            <td class="var-val" id="var-structure">[ ]</td>
+                        </tr>
+                        <tr>
+                            <td class="var-name">status</td>
+                            <td class="var-val" id="var-status">Aguardando</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </aside>
+    </div>
+
+    <!-- Mensagem Toast para validações -->
+    <div id="toast"></div>
+
+    <!-- Conexão com o JavaScript externo -->
+    <script src="app.js"></script>
+</body>
+</html>
