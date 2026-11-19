@@ -40,7 +40,7 @@ Diretório de arquivos: Organização utilizando hierarquia entre os diretórios
 | **Remoção (Delete)** | O(1) | O(log n) | O(n) | O(h) *(recursão)* / O(1) *(iterativo)* |
 
 
-Pior caso: O pior caso O(n) ocorre quando ela se torna uma árvore desbalanceada(ou também conhecida como árvore degenerada) e ficando parecida com uma lista encadeada geometricamente. Dessa maneira, conforme se adiciona valores de maneira ordenada, a árvore irá inserir sempre na subarvore direita da anterior(seguindo as suas próprias regras). Nesse sentido, a altura passa a ser igual o numero de nós e deixa de ser log(n) que seria a eficiência ideal, fazendo com que os métodos de in-order, pre-order e post-order percam a vantagem da divisão por dois e necessitem de varredura linear em todos os valores, tornando-se O(n).
+Pior caso: O pior caso O(n) ocorre quando ela se torna uma árvore desbalanceada(ou também conhecida como árvore degenerada) e ficando parecida com uma lista encadeada geometricamente. Dessa maneira, conforme se adiciona valores de maneira ordenada, a árvore irá inserir sempre na subarvore direita da anterior(seguindo as suas próprias regras). Nesse sentido, a altura passa a ser igual o numero de nós e deixa de ser O(log n) que seria a eficiência ideal, fazendo com que os métodos de in-order, pre-order e post-order percam a vantagem da divisão por dois e necessitem de varredura linear em todos os valores, tornando-se O(n).
 
 
 Diário de engenharia da IA:
