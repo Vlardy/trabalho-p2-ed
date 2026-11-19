@@ -6,7 +6,7 @@ Curso: ADS(Análise e desenvolvimento de sistemas), 3 período.
 
 Tema: B - Árvore binária de busca:BST
 
-Link do vídeo:
+Link do vídeo: https://youtu.be/WiEZ-ceNEn0
 
 Link do HTML: https://Vlardy.github.io/trabalho-p2-ed/trabalho-p2-ed/src/demo/
 
