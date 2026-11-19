@@ -49,6 +49,20 @@ Lista dos 3 principais prompts que foram utilizados:
 
 "faça um simulador visual de árvores binárias de busca(um exemplo)"
 
+"O resultado ficou muito bom, porém poderia adicionar botão de inserção aleatória ($O(\log n)$) vs. inserção ordenada / árvore degenerada($O(n)$)?"
+
+"Funciona abrindo arquivo index html diretamente no navegador(sem necessidade de servidores backend)?"
+
+Relato de 1 erro: Após ele contribuir com o HTML, tive que pedir para ele corrigir o fato da demonstração correr automaticamente até o final sem opções de pausar, avançar um passo por vez ou resetar.
+
+"Voltando ao prompt de árvore binária, ele cumpre esses requisitos?
+
+Execução Passo a Passo: Botões de Executar / Play, Próximo Passo (Step), Pausar e Reiniciar (Reset).
+Cenários Pré-configurados: Botões para carregar rapidamente exemplos didáticos (ex.: Caso Médio, Pior Caso, Exemplo Customizado).
+Painel de Estado e Métricas: Exibição em tempo real do que está acontecendo no passo atual (log explicativo do passo, número de comparações/operações acumuladas e estado das variáveis auxiliares).
+Autocontido: Deve funcionar abrindo o arquivo index.html diretamente no navegador (sem exigir instalação complexa de servidores backend)." e ele ainda não havia entendido, e então mandei:
+
+"Digo do que havia sido gerado anteriormente" e assim compreendeu.
 
 
 
