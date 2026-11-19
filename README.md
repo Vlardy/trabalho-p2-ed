@@ -8,6 +8,8 @@ Tema: B - Árvore binária de busca:BST
 
 Link do vídeo:
 
+Link do HTML: https://github.com/Vlardy/trabalho-p2-ed/blob/main/src/demo/index.html
+
 Sobre a árvore binária de busca(BST): A árvore binária de busca(BST) tem como um do seus propósitos o armazenamento de quaisquer valores, e após guardado de maneira organizada, possui capacidades como mecanismos de busca, inserção e remoção desses mesmos dados., Em sua estrutura, ele possui um nó principal no topo(denominado raíz) podendo ter apenas um filho de cada lado(esquerda e direita).Nesse sentido, vem um dos pilares fundamentais da sua lógica de funcionamento: Considerando qualquer nó na árvore, o valor da esquerda deve obrigatoriamente ser menor do que o respectivo nó pai, e já no caso da direita, deve ser maior que o seu nó pai. Algumas de suas funcionalidades são formalmente conhecidas como:
 
 --->Busca: Começa na raiz já comparando o valor atual com o dela. Em caso do valor ser menor ele prossegue para o lado esquerdo, e se for maior, prossegue para o lado direito ignorando o outro lado e continuando a busca pelo valor. Em caso do valor ser igual ao começar, ele encerra a busca logo de cara.
